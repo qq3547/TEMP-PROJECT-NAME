@@ -1,0 +1,26 @@
+services:
+  mongo:
+    image: mongo:7
+    container_name: mal_mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  postgres:
+    image: postgres:16
+    container_name: mal_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-mal_anime}
+      POSTGRES_USER: ${POSTGRES_USER:-mal_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-mal_password}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  mongo_data:
+  postgres_data:

@@ -1,0 +1,11 @@
+.env
+config/tokens.json
+config/valid_ids.json
+config/valid_ids_progress.json
+logs/*.log
+data/processed/*.csv
+__pycache__/
+*.pyc
+.venv/
+venv/
+.ipynb_checkpoints/
