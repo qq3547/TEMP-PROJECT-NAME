@@ -102,22 +102,6 @@ def genre_score_profile(engine: Engine, min_count: int = 100) -> pd.DataFrame:
     return pd.read_sql(query, engine, params={"min_count": min_count})
 
 
-def top_genres_by_avg_score(engine: Engine, min_count: int = 30) -> pd.DataFrame:
-    query = """
-        SELECT g.name AS genre,
-               COUNT(*) AS anime_count,
-               ROUND(AVG(a.mean_score)::numeric, 3) AS avg_score
-        FROM anime a
-        JOIN anime_genres ag ON ag.mal_id = a.mal_id
-        JOIN genres g ON g.genre_id = ag.genre_id
-        WHERE a.mean_score IS NOT NULL
-        GROUP BY g.name
-        HAVING COUNT(*) >= %(min_count)s
-        ORDER BY avg_score DESC
-    """
-    return pd.read_sql(query, engine, params={"min_count": min_count})
-
-
 def studio_output_by_year(engine: Engine) -> pd.DataFrame:
     query = """
         SELECT s.name AS studio,
